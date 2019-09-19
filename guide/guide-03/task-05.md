@@ -78,7 +78,7 @@ spec:
 ```
 kubectl get ep
 kubectl exec -it whoami-<xxxxx> sh
-  apk add curl busybox-extras # install telnet
+  apk add --update && apk add curl busybox-extras # install telnet
   curl localhost:4567
   curl localhost:4567
   telnet localhost 6379

@@ -154,7 +154,7 @@ kubectl logs whoami-redis db
 kubectl exec -it whoami-redis
 kubectl exec -it whoami-redis -c db sh
 kubectl exec -it whoami-redis -c app sh
-  apk add curl busybox-extras # install telnet
+  apk add --update && apk add curl busybox-extras # install telnet
   curl localhost:4567
   telnet localhost 6379
     dbsize
