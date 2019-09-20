@@ -2,6 +2,13 @@
 
 nginx-ingress를 먼저 설치함 (K3S는 내장)
 
+- [docker for mac 에서 설치 방법](https://github.com/kubernetes/ingress-nginx/blob/master/docs/deploy/index.md#docker-for-mac)
+
+```sh
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/mandatory.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/provider/cloud-generic.yaml
+```
+
 ## wildcard DNS
 
 ip를 기반으로 도메인을 쉽게 사용할 수 있습니다. 실습에서 사용합니다.
