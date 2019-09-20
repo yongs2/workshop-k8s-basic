@@ -188,6 +188,18 @@ spec:
     service: whoami
 ```
 
+- whoami 서비스를 v1,v2 모두 허용하려면, overwrite 옵션을 설정
+
+```sh
+kubectl apply --overwrite -f whoami-svc-all.yml
+```
+
+- whoami 서비스를 v1 으로만 허용하려면, overwrite 옵션을 설정
+
+```sh
+kubectl apply --overwrite -f whoami-svc-v1.yml
+```
+
 ## 테스트
 
 ## Exam 1. 다음 조건을 만족하는 load balancer를 만들어 보세요.
