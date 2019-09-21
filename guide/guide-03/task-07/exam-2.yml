@@ -1,0 +1,149 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: guestbook
+  annotations:
+    ingress.kubernetes.io/rewrite-target: "/"
+    ingress.kubernetes.io/ssl-redriect: "false"
+spec:
+  rules:
+  - host: guestbook.127.0.0.1.sslip.io
+    http:
+      paths:
+      - path: /
+        backend: 
+          serviceName: guestbook
+          servicePort: 8000
+
+---
+
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: guestbook
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      type: app
+      service: guestbook
+      tier: frontend
+  template:
+    metadata:
+      labels:
+        type: app
+        service: guestbook
+        tier: frontend
+    spec:
+      containers:
+      - name: guestbook
+        image: subicura/guestbook-frontend:latest
+        env:
+        - name: PORT
+          value: "8000"
+        - name: GUESTBOOK_API_ADDR
+          value: "APISERVER:8000"
+
+---
+
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: apiserver
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      type: app
+      service: apiserver
+      tier: backend
+  template:
+    metadata:
+      labels:
+        type: app
+        service: apiserver
+        tier: backend
+    spec:
+      containers:
+      - name: apiserver
+        image: subicura/guestbook-backend:latest
+        env:
+        - name: PORT
+          value: "8000"
+        - name: GUESTBOOK_DB_ADDR
+          value: "mongo:27017"
+
+---
+
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: mongo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      type: db
+      service: mongo
+      tier: backend
+  template:
+    metadata:
+      labels:
+        type: db
+        service: mongo
+        tier: backend
+    spec:
+      containers:
+      - name: mongo
+        image: mongo:4
+        env:
+        - name: PORT
+          value: "27071"
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: guestbook
+spec:
+  ports:
+  - port: 8000
+    targetPort: 8000
+    protocol: TCP
+  selector:
+    type: app
+    service: guestbook
+    tier: frontend
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: apiserver
+spec:
+  ports:
+  - port: 8000
+    targetPort: 8000
+    protocol: TCP
+  selector:
+    type: app
+    service: apiserver
+    tier: backend
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo
+spec:
+  ports:
+  - port: 27017
+    targetPort: 27017
+    protocol: TCP
+  selector:
+    type: db
+    service: mongo
+    tier: backend

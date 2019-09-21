@@ -1,0 +1,53 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: whoami-v1
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      type: app
+      service: whoami
+      version: v1
+  template:
+    metadata:
+      labels:
+        type: app
+        service: whoami
+        version: v1
+    spec:
+      containers:
+      - name: whoami
+        image: subicura/whoami:1
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 4567
+
+---
+
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: whoami-v2
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      type: app
+      service: whoami
+      version: v2
+  template:
+    metadata:
+      labels:
+        type: app
+        service: whoami
+        version: v2
+    spec:
+      containers:
+      - name: whoami
+        image: subicura/whoami:2
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 4567
