@@ -184,7 +184,7 @@ curl http://v2.whoami.127.0.0.1.sslip.io
 
 ## Exam 1. 다음 조건을 만족하는 load balancer를 만들어 보세요.
 
-guide-03/task-07/exam-1.yml
+### guide-03/task-07/exam-1.yml
 
 - Name: nginx
 - Labels: app => nginx
@@ -193,9 +193,15 @@ guide-03/task-07/exam-1.yml
 - Replicas: 3
 - nginx.\<ip\>.sslip.io
 
+### 확인 방법
+
+```sh
+curl nginx.127.0.0.1.sslip.io
+```
+
 ## Exam 2. 방명록 만들기
 
-guide-03/task-07/exam-2.yml
+### guide-03/task-07/exam-2.yml
 
 **ingress**
 
@@ -230,6 +236,12 @@ guide-03/task-07/exam-2.yml
 
 기본포트
 - 27017
+
+### 확인 방법
+
+```sh
+curl http://guestbook.127.0.0.1.sslip.io
+```
 
 ## 정리
 
