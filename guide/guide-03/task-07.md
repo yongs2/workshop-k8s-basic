@@ -42,7 +42,7 @@ metadata:
     ingress.kubernetes.io/ssl-redirect: "false"
 spec:
   rules:
-  - host: v1.whoami.13.125.41.102.sslip.io
+  - host: v1.whoami.127.0.0.1.sslip.io
     http:
       paths: 
       - path: /
@@ -98,6 +98,12 @@ spec:
 kubectl get ing
 ```
 
+- 확인 방법
+
+```sh
+curl http://v1.whoami.127.0.0.1.sslip.io
+```
+
 ### 추가 예제
 
 guide-03/task-07/whoami-v2.yml
@@ -112,7 +118,7 @@ metadata:
     ingress.kubernetes.io/ssl-redirect: "false"
 spec:
   rules:
-  - host: v2.whoami.13.125.41.102.sslip.io
+  - host: v2.whoami.127.0.0.1.sslip.io
     http:
       paths: 
       - path: /
@@ -162,6 +168,16 @@ spec:
     type: app
     service: whoami
     version: v2
+```
+
+```
+kubectl get ing
+```
+
+- 확인 방법
+
+```sh
+curl http://v2.whoami.127.0.0.1.sslip.io
 ```
 
 ## 테스트
