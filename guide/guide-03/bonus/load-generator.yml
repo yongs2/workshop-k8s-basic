@@ -1,0 +1,24 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: load-generator-deploy
+spec:
+  selector:
+    matchLabels:
+      type: app
+      service: load-generator
+  template:
+    metadata:
+      labels:
+        type: app
+        service: load-generator
+    spec:
+      containers:
+      - name: load-generator
+        image: busybox
+        command:
+          - /bin/sh
+          - "-c"
+          - "while true; do wget -q -O- http://hpa-example; done"
+        imagePullPolicy: IfNotPresent
+      restartPolicy: Always
